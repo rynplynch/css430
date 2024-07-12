@@ -1,0 +1,103 @@
+#+title: Program 1A
+#+author: Ryan P. Lynch
+#+date: \today
+#+latex_compiler: xelatex
+#+latex_header: \usepackage{libertine} \usepackage{amsmath}
+#+latex_header: \usepackage[width=200.00mm, height=240.00mm, left=3cm, right=3cm, top=3 cm, bottom=3cm]{geometry}
+#+latex_header: \usepackage{graphicx}
+#+latex_header: \graphicspath{ {./images/} }
+#+latex_header: \usepackage{multicol}
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper,11pt,twoside]
+#+OPTIONS: toc:nil num:nil
+
+* Illustration
+\begin{multicols}{2}
+\noindent
+We start with only the parent process\\
+\\
+\\
+\\
+\\
+Execute pipe twice to create the file descriptors we need\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+Fork the parent process, copying file descriptors\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+Fork the child process, copying file descriptors\\
+\vfill\null
+\columnbreak
+\includegraphics[width=0.42\textwidth]{flow-diagram.drawio0}
+\end{multicols}
+\begin{multicols}{2}
+\\
+\\
+\\
+\\
+\\
+\noindent
+Duplicate the file descriptors to the Standard Out/In of their processes\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+Close the file descriptors we no longer need
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+Execute ps command, the child process is waiting for this to finish. Sends results through Standard Out and pipes into Standard In of child process
+\\
+\\
+\\
+\\
+\\
+\\
+Execute grep command, the parent process is waiting for this to finish. Sends results through Standard Out and pipes into Standard In of parent process
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+Execute wc command. Sends results through Standard Out.
+\vfill\null
+\columnbreak
+\includegraphics[width=0.5\textwidth]{flow-diagram.drawio}
+\end{multicols}
+* Compile and Execution
+The screenshot below is proof that I compiled and ran the homework assignment on the UWB lab machines.
+file:./images/compile-and-execution.png
+This also shows the program returning the same value as the equivalent commands on the CLI
+#+begin_src bash
+ps -A | grep -i ssh | wc -l
+#+end_src
