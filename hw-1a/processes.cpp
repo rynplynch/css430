@@ -38,7 +38,10 @@ int main(int argc, char **argv) {
   int childID;
   int grandID;
 
-  childID = fork();
+  // create new process while checking for error
+  if ((childID = fork()) < 0)
+    // error occurred
+    perror("Failed to create grep process");
 
   if (childID == 0) {
     dup2(fdToGrep[1], STDOUT_FILENO);
@@ -49,6 +52,11 @@ int main(int argc, char **argv) {
   }
 
   grandID = fork();
+    // create new process while checking for error
+    if ((grandID = fork()) < 0)
+      // error occurred
+      perror("Failed to create ps process");
+
 
   if (grandID == 0) {
     // accept input direct toward grep
