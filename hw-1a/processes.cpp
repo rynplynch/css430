@@ -1,15 +1,8 @@
-#include <complex>
 #include <cstddef>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <fcntl.h>
-#include <fstream>
-#include <ios>
-#include <iterator>
-#include <stdio.h>  // for NULL, perror
-#include <stdlib.h> // for exit
-#include <string>
 #include <sys/types.h> // for fork, wait
 #include <sys/wait.h>  // for wait
 #include <unistd.h>    // for fork, pipe, dup, close
