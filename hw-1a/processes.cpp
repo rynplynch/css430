@@ -43,41 +43,52 @@ int main(int argc, char **argv) {
     // error occurred
     perror("Failed to create grep process");
 
+  // childID will be unassigned in child process
   if (childID == 0) {
-    dup2(fdToGrep[1], STDOUT_FILENO);
-    close(fdToGrep[0]);
-    close(fdToGrep[1]);
-
-    execlp("ps", "ps", "-A", NULL);
-  }
-
-  grandID = fork();
     // create new process while checking for error
     if ((grandID = fork()) < 0)
       // error occurred
       perror("Failed to create ps process");
 
+    // grandID will be unassigned in grandchild process
+    if (grandID == 0) {
+      // write to the output of the grep fd
+      dup2(fdToGrep[1], STDOUT_FILENO);
 
-  if (grandID == 0) {
+      // close fds we no longer need
+      close(fdToGrep[0]);
+      close(fdToGrep[1]);
+      close(fdToWc[0]);
+      close(fdToWc[1]);
+
+      // execute ps in the grandchild process
+      execlp("ps", "ps", "-A", NULL);
+    }
+
     // accept input direct toward grep
     dup2(fdToGrep[0], STDIN_FILENO);
 
-    // close cloned fds
+    // close not needed fs
     close(fdToGrep[0]);
     close(fdToGrep[1]);
 
     // direct output toward wc
     dup2(fdToWc[1], STDOUT_FILENO);
 
-    // close cloned fs
+    // close not needed fs
     close(fdToWc[0]);
     close(fdToWc[1]);
 
+    // wait for the ps command to execute
+    waitpid(grandID, NULL, 0);
+
+    // call grep using the $PATH enviroment variable
+    // pass in the -i flag to ignore casing
+    // pass in user provided argument to search for
     execlp("grep", "grep", "-i", argv[1], NULL);
   }
 
-  // it's critical that all fds are closed
-  // once all writers are closed grep knows to stop reading
+  // this process only needs output from wc
   close(fdToGrep[0]);
   close(fdToGrep[1]);
 
@@ -88,9 +99,10 @@ int main(int argc, char **argv) {
   close(fdToWc[0]);
   close(fdToWc[1]);
 
-  waitpid(childID, NULL, 0);
-  waitpid(grandID, NULL, 0);
+  // make sure all child process are done
+  wait(NULL);
 
+  // count the number of lines output from grep
   execlp("wc", "wc", "-l", NULL);
 
   return 0;
