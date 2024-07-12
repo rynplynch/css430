@@ -1,0 +1,23 @@
+#+title: Program 1B
+#+author: Ryan P. Lynch
+#+date: \today
+#+latex_compiler: xelatex
+#+latex_header: \usepackage{libertine} \usepackage{amsmath}
+#+latex_header: \usepackage[width=200.00mm, height=240.00mm, left=3cm, right=3cm, top=3 cm, bottom=3cm]{geometry}
+#+latex_header: \usepackage{graphicx}
+#+latex_header: \graphicspath{ {./images/} }
+#+latex_header: \usepackage{multicol}
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper,11pt,twoside]
+#+OPTIONS: toc:nil num:nil
+* Compile and Executing
+\begin{document}
+The screenshot below shows the compiling of Shell.java\\
+It also shows the testing of concurrent commands. All three PingPong commands are ran at the same time, having their outputs mixed in with each others.\\
+\centerline{\includegraphics[scale=.35]{conurrent-test}}
+\\
+\\
+The screenshot below shows the compiling of Shell.java\\
+It also shows the testing of sequential commands. Each PingPong command must wait for the previous one to finish before it is allowed to create a thread start running.\\
+\centerline{\includegraphics[scale=.35]{sequential-test}}
+\end{document}
