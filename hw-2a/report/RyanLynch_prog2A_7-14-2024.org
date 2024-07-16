@@ -1,4 +1,4 @@
-#+title: Program 1A
+#+title: Program 2A
 #+author: Ryan P. Lynch
 #+date: \today
 #+latex_compiler: xelatex
@@ -11,93 +11,46 @@
 #+LATEX_CLASS_OPTIONS: [a4paper,11pt,twoside]
 #+OPTIONS: toc:nil num:nil
 
-* Illustration
-\begin{multicols}{2}
-\noindent
-We start with only the parent process\\
-\\
-\\
-\\
-\\
-Execute pipe twice to create the file descriptors we need\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-Fork the parent process, copying file descriptors\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-Fork the child process, copying file descriptors\\
-\vfill\null
-\columnbreak
-\includegraphics[width=0.42\textwidth]{flow-diagram.drawio0}
-\end{multicols}
-\begin{multicols}{2}
-\\
-\\
-\\
-\\
-\\
-\noindent
-Duplicate the file descriptors to the Standard Out/In of their processes\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-Close the file descriptors we no longer need
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-Execute ps command, the child process is waiting for this to finish. Sends results through Standard Out and pipes into Standard In of child process
-\\
-\\
-\\
-\\
-\\
-\\
-Execute grep command, the parent process is waiting for this to finish. Sends results through Standard Out and pipes into Standard In of parent process
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-\\
-Execute wc command. Sends results through Standard Out.
-\vfill\null
-\columnbreak
-\includegraphics[width=0.5\textwidth]{flow-diagram.drawio}
-\end{multicols}
+* Illustration of Stack
+** Stack During func3 Looping
+Starting state of the stack as laid out by the question.
+|---------+-----------|
+| *func3* | /running/ |
+|         | i = 4     |
+|---------+-----------|
+| *func2* | /waiting/ |
+|         | i = 4     |
+|---------+-----------|
+| *func1* | /waiting/ |
+|         | i = 4     |
+|---------+-----------|
+| *main*  | /waiting/ |
+|---------+-----------|
+
+** Stack After func3 Interrupt
+The time quantum of 5 seconds has passed. Therefore the alarm flag has been raised and a context change is performed by the scheduler.
+|---------+-----------|
+| *func3* | /waiting/ |
+|         | i = 4     |
+|---------+-----------|
+| *func2* | /waiting/ |
+|         | i = 4     |
+|---------+-----------|
+| *func1* | /running/ |
+|         | i = 5     |
+|---------+-----------|
+| *main*  | /waiting/ |
+|---------+-----------|
+The scheduler picks *func1* to be executed. It does this because *func1* is at the front of the thread queue. This is true because it was the first to be added during the calling of /sthread_create/ and the subsequent calling of /capture/ in /sthread_init/.
+\pagebreak
 * Compile and Execution
-The screenshot below is proof that I compiled and ran the homework assignment on the UWB lab machines.
-file:./images/compile-and-execution.png
-This also shows the program returning the same value as the equivalent commands on the CLI
-#+begin_src bash
-ps -A | grep -i ssh | wc -l
-#+end_src
+\begin{multicols}{2}
+\noindent
+\includegraphics[width=0.5\textwidth]{compile-execution}
+\vfill\null
+\columnbreak
+\noindent
+The screenshot to the left shows driver.cpp being compiled on the UW Bothell lab machine.\\
+\\
+It also shows the execution of the resulting a.out binary.\\
+\end{multicols}
