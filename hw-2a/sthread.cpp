@@ -19,12 +19,48 @@
       longjmp(scheduler_env, 1);                                               \
   }
 
-// TODO: to be implemented in this assignment
-#define capture( ) {							\
+// save threads current function call variables
+#define capture()                                                              \
+  {                                                                            \
+    /* assembly directives to grab top and bottom pointer of stack*/           \
+    register void *sp asm("sp");                                               \
+    register void *bp asm("bp");                                               \
+                                                                               \
+    /* calculate the size of the functions stack and save in tcb */            \
+    cur_tcb->size = (int)((long long int)bp - (long long int)sp);              \
+                                                                               \
+    /* save stack pointer */                                                   \
+    cur_tcb->sp = sp;                                                          \
+                                                                               \
+    /* reserve memory location for stack */                                    \
+    cur_tcb->stack = malloc(cur_tcb->size);                                    \
+                                                                               \
+    /* use memory copy to save stack into threads control block*/              \
+    memcpy(cur_tcb->stack, sp, cur_tcb->size);                                 \
+                                                                               \
+    /* add the threads tcb to the queue of active process */                   \
+    thr_queue.push(cur_tcb);                                                   \
   }
 
-// TODO: to be implemented in this assignment    
-#define sthread_yield( ) {						\
+// check if the current thread needs to context switch back to scheduler
+#define sthread_yield()                                                        \
+  {                                                                            \
+    /* check if alarmed flag set to true by signal handler */                  \
+    if (alarmed) {                                                             \
+      /* lower flag so we don't yield on next check */                         \
+      alarmed = false;                                                         \
+                                                                               \
+      /* save current environment into threads control block */                \
+      if (setjmp(cur_tcb->env) == 0) {                                         \
+        /* also save function parameters into thread control block */          \
+        capture();                                                             \
+                                                                               \
+        /* move over to scheduler environment to switch to next thread */      \
+        longjmp(scheduler_env, 1);                                             \
+      }                                                                        \
+      /* execution handed back to thread, restore function parameters */       \
+      memcpy(cur_tcb->sp, cur_tcb->stack, cur_tcb->size);                      \
+    }                                                                          \
   }
 
 #define sthread_init()                                                         \
