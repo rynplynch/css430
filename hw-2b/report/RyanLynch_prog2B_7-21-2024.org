@@ -1,0 +1,68 @@
+#+title: Program 2B
+#+author: Ryan P. Lynch
+#+date: \today
+#+latex_compiler: xelatex
+#+latex_header: \usepackage{libertine} \usepackage{amsmath}
+#+latex_header: \usepackage[width=200.00mm, height=240.00mm, left=3cm, right=3cm, top=3 cm, bottom=3cm]{geometry}
+#+latex_header: \usepackage{graphicx}
+#+latex_header: \graphicspath{ {./images/} }
+#+latex_header: \usepackage{multicol}
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper,11pt,twoside]
+#+OPTIONS: toc:nil num:nil
+* Compile and Executing MFQ
+The below screen shots are from compiling /Scheduler_mfq.java/
+#+begin_src bash
+mv Scheduler_mfq.java Scheduler.java
+javac -deprecation Scheduler.java
+#+end_src
+Sending the starting exec to the scheduler.
+[[file:./mfq0.png]]
+The first result from finished thread.
+[[file:./mfq1.png]]
+The second result from finished thread.
+[[file:./mfq2.png]]
+The third result from finished thread.
+[[file:./mfq3.png]]
+The fourth result from finished thread.
+[[file:./mfq4.png]]
+The fifth and final result from finished thread.
+[[file:./mfq5.png]]
+** Runtime Table
+|      | Response |     TAT | Exec Join | Total |
+|------+----------+---------+-----------+-------|
+| b    |      999 |    5504 |      4505 |       |
+| e    |     2501 |    7506 |      5005 |       |
+| c    |     1500 |   15012 |     13512 |       |
+| a    |      498 |   22521 |     22023 |       |
+| d    |     2001 |   29025 |     27024 |       |
+|------+----------+---------+-----------+-------|
+| avg. |   1499.8 | 15913.6 |   14413.8 | 31028 |
+* Compile and Executing RR
+The below screen shots are from compiling /Scheduler_rr.java/
+#+begin_src bash
+mv Scheduler_rr.java Scheduler.java
+javac -deprecation Scheduler.java
+#+end_src
+Sending the starting exec to the scheduler.
+[[file:./rr0.png]]
+The first result from finished thread.
+[[file:./rr1.png]]
+The second result from finished thread.
+[[file:./rr2.png]]
+The third result from finished thread.
+[[file:./rr3.png]]
+The fourth result from finished thread.
+[[file:./rr4.png]]
+The fifth and final result from finished thread.
+[[file:./rr5.png]]
+** Runtime Table
+|      | Response |     TAT | Exec Join | Total |
+|------+----------+---------+-----------+-------|
+| e    |     6001 |    6503 |       502 |       |
+| b    |     2999 |    9504 |      6505 |       |
+| c    |     4000 |   19507 |     15507 |       |
+| a    |     1999 |   26510 |     24511 |       |
+| d    |     5001 |   29510 |     24509 |       |
+|------+----------+---------+-----------+-------|
+| avg. |     4000 | 18306.8 |   14306.8 | 29512 |
