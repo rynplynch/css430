@@ -1,0 +1,18 @@
+#+title: Program 3A
+#+author: Ryan P. Lynch
+#+date: \today
+#+latex_compiler: xelatex
+#+latex_header: \usepackage{libertine} \usepackage{amsmath}
+#+latex_header: \usepackage[width=200.00mm, height=240.00mm, left=3cm, right=3cm, top=3 cm, bottom=3cm]{geometry}
+#+latex_header: \usepackage{graphicx}
+#+latex_header: \graphicspath{ {./images/} }
+#+latex_header: \usepackage{multicol}
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper,11pt,twoside]
+#+OPTIONS: toc:nil num:nil
+* Table 1 Compiled & Executed
+The screenshot below shows the compiling of the /philosopher.cpp/ file and the execution of the resulting binary using table 1.
+[[file:./images/table1.png]]
+* Table 2 Compiled & Executed
+The screenshot below shows the compiling of the /philosopher.cpp/ file and the execution of the resulting binary using table 2.
+[[file:./images/table2.png]]
