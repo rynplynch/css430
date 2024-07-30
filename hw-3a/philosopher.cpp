@@ -45,19 +45,23 @@ class Table1 {
 public:
   Table1() {
     // HW3A TODO: initialize the mutex lock (tip: one line of code)
+    pthread_mutex_init(&lock, NULL);
   }
   void pickup(int i) {
     // HW3A TODO: lock the mutex (tip: one line of code)
+    pthread_mutex_lock(&lock);
     cout << "philosopher[" << i << "] picked up chopsticks" << endl;
   }
 
   void putdown(int i) {
     cout << "philosopher[" << i << "] put down chopsticks" << endl;
     // HW3A TODO: unlock the mutex (tip: one line of code)
+    pthread_mutex_unlock(&lock);
   }
 
 private:
   // HW3A TODO: define a mutex lock (tip: one line of code)
+  pthread_mutex_t lock;
 };
 
 class Table0 {
