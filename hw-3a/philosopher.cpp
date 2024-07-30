@@ -16,16 +16,50 @@ public:
   Table2() {
     // HW3A TODO: initialize the table
     // initialize the mutex, conditional varilabels and state
+    pthread_mutex_init(&lock, NULL);
+    for (int i = 0; i < PHILOSOPHERS; i++) {
+      pthread_cond_init(&self[i], NULL);
+      state[i] = THINKING;
+    }
   }
   void pickup(int i) {
     // HW3A TODO: implement the pickup method by referring to the textbook
     // Figure 5.18.
+    // set the state of the philosopher to hungry
+    pthread_mutex_lock(&lock);
+    state[i] = HUNGRY;
+
+    // check if philosopher can pick up both chopsticks
+    test(i);
+
+    // as long as the philosopher is not already eating
+    if (state[i] != EATING) {
+      // wait until the philosopher can pick up both chopsticks
+      pthread_cond_wait(&self[i], &lock);
+
+      // pick up the chopsticks
+      cout << "philosopher[" << i << "] picked up chopsticks" << endl;
+    }
+    pthread_mutex_unlock(&lock);
   }
 
   void putdown(int i) {
     // HW3A TODO: implement the putdown method by referring to the textbook
     // Figure 5.18.
+    // Yummy! All done eating, go back to thinking
+    pthread_mutex_lock(&lock);
+    state[i] = THINKING;
+
+    // grab the index of the neighboring philosophers
+    int l = (i + (PHILOSOPHERS - 1)) % PHILOSOPHERS;
+    int r = (i + 1) % PHILOSOPHERS;
+
+    // let our neighbors know that they can use our chopsticks now (GROSS)
+    test(l);
+    test(r);
+
     cout << "philosopher[" << i << "] put down chopsticks" << endl;
+    pthread_mutex_unlock(&lock);
   }
 
 private:
@@ -38,6 +72,26 @@ private:
   void test(int i) {
     // HW3A TODO: implement by yourself by referring to the textbook
     // Figure 5.18.
+    // grab the index of the neighboring philosophers
+    int l = (i + (PHILOSOPHERS - 1)) % PHILOSOPHERS;
+    int r = (i + 1) % PHILOSOPHERS;
+
+    // cout << "index of thinker: " << i << endl;
+    // cout << "index of left neighbor: " << l << endl;
+    // cout << "index of right neighbor: " << r << endl;
+
+    // if the current philosopher is hungry
+    if ((state[i] == HUNGRY) &&
+        // and the philosopher to the left is not eating
+        (state[l] != EATING) &&
+        // and the philosopher to the right is not eating
+        (state[r] != EATING)) {
+      // the current philosopher can eat
+      state[i] = EATING;
+
+      // let waiting process in queue know they can go ahead and eat
+      pthread_cond_signal(&self[i]);
+    }
   }
 };
 
