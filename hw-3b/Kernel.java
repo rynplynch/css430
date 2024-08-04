@@ -63,7 +63,10 @@ public class Kernel
 
     // The heart of Kernel
     public static int interrupt( int irq, int cmd, int param, Object args ) {
+        // thread controller block, must be restored during context switch
         TCB myTcb;
+
+        // which interrupt signal was used?
         switch( irq ) {
         case INTERRUPT_SOFTWARE: // System calls
             switch( cmd ) {
@@ -88,16 +91,20 @@ public class Kernel
                 // HW3b TODO: implemente the logic for case WAIT
             case WAIT:
                 // get the current thread id
+                myTcb = scheduler.getMyTcb();
                 // let the current thread sleep in waitQueue under the
                 // condition = this thread id
                 // return a child thread id who woke me up
-                return ERROR; // default return value for this case
+                return waitQueue.enqueueAndSleep(myTcb.getTid()); // default return value for this case
                 // HW3b TODO: implemente the logic for case EXIT
             case EXIT:
                 // get the current thread's parent id
+                myTcb = scheduler.getMyTcb();
                 // search waitQueue for and wakes up the thread under the
                 // condition = the current thread's parent id
+                waitQueue.dequeueAndWakeup(myTcb.getPid(), myTcb.getTid());
                 // tell the Scheduler to delete the current thread (since it is exiting)
+                scheduler.deleteThread();
                 return ERROR; // default return value for this case
             case SLEEP:   // sleep a given period of milliseconds
                 scheduler.sleepThread( param ); // param = milliseconds
