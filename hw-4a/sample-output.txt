@@ -1,0 +1,71 @@
+If you want to use the sample result for reference, here it is.
+
+Your results might be different from mine.
+
+Your results might also be different from machine to machine.
+
+$ strace ./a.out l 2>&1 | grep brk
+brk(NULL)                               = 0xeb0000
+brk(NULL)                               = 0xeb0000
+brk(0xed1000)                           = 0xed1000
+brk(NULL)                               = 0xed1000
+$ strace ./a.out b 2>&1 | grep brk
+brk(NULL)                               = 0x1c93000
+brk(NULL)                               = 0x1c93000
+brk(NULL)                               = 0x1c93000
+brk(0x1c9316f)                          = 0x1c9316f
+brk(NULL)                               = 0x1c9316f
+brk(0x1c9353d)                          = 0x1c9353d
+brk(NULL)                               = 0x1c9353d
+brk(0x1c935ae)                          = 0x1c935ae
+brk(NULL)                               = 0x1c935ae
+brk(0x1c93629)                          = 0x1c93629
+brk(NULL)                               = 0x1c93629
+brk(0x1c93682)                          = 0x1c93682
+brk(NULL)                               = 0x1c93682
+brk(0x1c93789)                          = 0x1c93789
+brk(NULL)                               = 0x1c93789
+brk(0x1c937db)                          = 0x1c937db
+brk(NULL)                               = 0x1c937db
+brk(0x1c938cf)                          = 0x1c938cf
+brk(NULL)                               = 0x1c938cf
+brk(0x1c93c00)                          = 0x1c93c00
+brk(NULL)                               = 0x1c93c00
+brk(0x1c93cd5)                          = 0x1c93cd5
+brk(NULL)                               = 0x1c93cd5
+brk(0x1c93ee2)                          = 0x1c93ee2
+brk(NULL)                               = 0x1c93ee2
+brk(0x1c942ba)                          = 0x1c942ba
+brk(NULL)                               = 0x1c942ba
+brk(0x1c945a3)                          = 0x1c945a3
+$ strace ./a.out f 2>&1 | grep brk
+brk(NULL)                               = 0x1e6b000
+brk(NULL)                               = 0x1e6b000
+brk(NULL)                               = 0x1e6b000
+brk(0x1e6b16f)                          = 0x1e6b16f
+brk(NULL)                               = 0x1e6b16f
+brk(0x1e6b53d)                          = 0x1e6b53d
+brk(NULL)                               = 0x1e6b53d
+brk(0x1e6b5ae)                          = 0x1e6b5ae
+brk(NULL)                               = 0x1e6b5ae
+brk(0x1e6b629)                          = 0x1e6b629
+brk(NULL)                               = 0x1e6b629
+brk(0x1e6b682)                          = 0x1e6b682
+brk(NULL)                               = 0x1e6b682
+brk(0x1e6b789)                          = 0x1e6b789
+brk(NULL)                               = 0x1e6b789
+brk(0x1e6b7db)                          = 0x1e6b7db
+brk(NULL)                               = 0x1e6b7db
+brk(0x1e6b8cf)                          = 0x1e6b8cf
+brk(NULL)                               = 0x1e6b8cf
+brk(0x1e6bc00)                          = 0x1e6bc00
+brk(NULL)                               = 0x1e6bc00
+brk(0x1e6bcd5)                          = 0x1e6bcd5
+brk(NULL)                               = 0x1e6bcd5
+brk(0x1e6be19)                          = 0x1e6be19
+brk(NULL)                               = 0x1e6be19
+brk(0x1e6c026)                          = 0x1e6c026
+brk(NULL)                               = 0x1e6c026
+brk(0x1e6c3fe)                          = 0x1e6c3fe
+brk(NULL)                               = 0x1e6c3fe
+brk(0x1e6c6e7)                          = 0x1e6c6e7
