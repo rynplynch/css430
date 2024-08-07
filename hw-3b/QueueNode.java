@@ -10,18 +10,31 @@ public class QueueNode {
 
     public QueueNode( ) {
         // TODO: implement this constructor
+        tidQueue = new Vector<Integer>();
     }
 
     public synchronized int sleep( ) {
         // TODO: implement this method
         // If tidQueue has nothing, call wait( ).
+        if (tidQueue.isEmpty()){
+            try{
+                wait();
+            }
+            catch (InterruptedException e){
+
+            }
+        }
         // Otherwise, get one child TID from tidQueue.
-        // return it.
+            // return it.
+            return tidQueue.remove(0);
+
     }
 
     public synchronized void wakeup( int tid ) {
         // TODO: implement this method
         // Add this child TID to tidQueue.
+        tidQueue.addElement(tid);
         // Notify the parent.
+        notify();
     }
 }
