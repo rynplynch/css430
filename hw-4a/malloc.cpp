@@ -10,9 +10,12 @@ static void *
 
 class MCB { // memory control block
 public:
-  int available; // true(1): this memory partition is available, false(0)
-                 // unavailalbe.
-  int size;      // MCB size + the user data size
+  // true(1): this memory partition is available
+  // false(0): this memory partition is unavailable.
+  int available;
+
+  // MCB size + the user data size
+  int size;
 };
 
 void free_(void *dealloc_space) {
