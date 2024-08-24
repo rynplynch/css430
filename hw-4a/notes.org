@@ -1,0 +1,27 @@
+#+title: Notes
+
+1 Byte = 8 bits
+* heap end after first allocation
+0x55f823ce16c0
+
+size = 359 + 8
+size = 367 Bytes
+
+need 2936 bits
+* heap end after second allocation
+0x55f823ce1830
+
+size = 966 + 8
+size = 974 Bytes
+
+need 7792 bits
+
+
+
+
+The end of the heap starts here: 0x556e21c17000
+
+Size of allocated MCB and data: 375
+which is = 177 in hex
+
+The bottom of the heap is now here: 0x556e21c17177

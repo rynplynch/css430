@@ -1,0 +1,36 @@
+#+title: Program 4A
+#+author: Ryan P. Lynch
+#+date: \today
+#+latex_compiler: xelatex
+#+latex_header: \usepackage{libertine} \usepackage{amsmath}
+#+latex_header: \usepackage[width=200.00mm, height=240.00mm, left=3cm, right=3cm, top=3 cm, bottom=3cm]{geometry}
+#+latex_header: \usepackage{graphicx}
+#+latex_header: \graphicspath{ {./images/} }
+#+latex_header: \usepackage{multicol}
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper,11pt,twoside]
+#+OPTIONS: toc:nil num:nil
+
+* Compile and Execution Linux malloc
+\noindent
+\includegraphics[width=0.5\textwidth]{linux_malloc}\\
+The screenshot above shows driver.cpp and malloc.cpp being compiled on the UW Bothell lab machine.\\
+It also shows the execution and results of the a.out binary with the 'l' switch passed to it. This result has the fewest system calls made.\\
+* Compile and Execution Best Fit
+\begin{multicols}{2}
+\noindent
+\includegraphics[width=0.5\textwidth]{ryan_b-malloc}
+\noindent
+The screenshot to the left shows driver.cpp and malloc.cpp being compiled on the UW Bothell lab machine.\\
+\\
+It also shows the execution and results of the a.out binary with the 'b' switch passed to it. Less system calls are made here than when the 'f' switch is used.\\
+\end{multicols}
+* Compile and Execution First Fit
+\begin{multicols}{2}
+\noindent
+\includegraphics[width=0.5\textwidth]{ryan_f-malloc}
+\noindent
+The screenshot to the left shows driver.cpp and malloc.cpp being compiled on the UW Bothell lab machine.\\
+\\
+It also shows the execution and results of the a.out binary with the 'f' switch passed to it. More system calls are made here than when the 'b' switch is used.\\
+\end{multicols}
